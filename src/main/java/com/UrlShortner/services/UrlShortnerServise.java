@@ -6,6 +6,7 @@ import io.seruco.encoding.base62.Base62;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 
 @Service
@@ -30,5 +31,21 @@ public class UrlShortnerServise {
 
 
         return "http://localhost:8080/" + new String(encBytes);
+    }
+
+    public String isUrlPresent(String url) {
+
+
+        boolean isBase62Encoding = base62.isBase62Encoding(url.getBytes(StandardCharsets.UTF_8));
+        if (isBase62Encoding){
+            Long originalIdx = Long.parseLong(new String(base62.decode(url.getBytes(StandardCharsets.UTF_8))));
+          Optional<Url> fromDb =  urlRepo.findById(originalIdx);
+            if (fromDb.isPresent()){
+                return fromDb.get().getUrl();
+            }
+
+        }
+
+        return " ";
     }
 }
