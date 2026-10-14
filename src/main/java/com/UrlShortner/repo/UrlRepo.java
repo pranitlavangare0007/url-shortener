@@ -1,6 +1,7 @@
 package com.UrlShortner.repo;
 
 import com.UrlShortner.model.Url;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,10 +14,11 @@ import java.util.Optional;
 public interface UrlRepo extends JpaRepository< Url,Long> {
 
 
+    @Transactional
     @Modifying
     @Query("""
         UPDATE Url u
-        SET u.clickCount = u.clickCount + :count
+        SET u.clickCount = COALESCE(u.clickCount, 0) + :count
         WHERE u.id = :id
         """)
     int addClickCount(

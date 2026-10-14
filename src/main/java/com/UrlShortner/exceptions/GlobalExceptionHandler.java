@@ -12,4 +12,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> invalidUrlHandler(InvalidUrlException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<String> invalidInputHandler(InvalidInputException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

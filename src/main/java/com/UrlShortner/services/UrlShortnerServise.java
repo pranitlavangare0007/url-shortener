@@ -1,5 +1,6 @@
 package com.UrlShortner.services;
 
+import com.UrlShortner.exceptions.InvalidInputException;
 import com.UrlShortner.exceptions.InvalidUrlException;
 import com.UrlShortner.model.Url;
 import com.UrlShortner.repo.UrlRepo;
@@ -18,7 +19,20 @@ public class UrlShortnerServise {
     final Base62 base62;
     final UrlRepo urlRepo;
 
-
+    private void validate(String url) {
+        if (url == null || url.isBlank() || url.length() > 2048)
+            throw new InvalidInputException("URL is required (max 2048 characters)");
+        try {
+            java.net.URI uri = new java.net.URI(url.trim());
+            String scheme = uri.getScheme();
+            boolean ok = scheme != null
+                    && (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https"))
+                    && uri.getHost() != null;
+            if (!ok) throw new InvalidInputException("Only valid http/https URLs are allowed");
+        } catch (java.net.URISyntaxException e) {
+            throw new InvalidInputException("Malformed URL");
+        }
+    }
     public UrlShortnerServise(Base62 base62, UrlRepo urlRepo, StringRedisTemplate redisTemplate) {
         this.base62 = base62;
         this.urlRepo = urlRepo;
@@ -27,6 +41,7 @@ public class UrlShortnerServise {
 
     public String shortUrl(String url) {
 
+        validate(url);
         Url url1 = new Url();
         url1.setUrl(url);
         Url savedUrl = urlRepo.save(url1);

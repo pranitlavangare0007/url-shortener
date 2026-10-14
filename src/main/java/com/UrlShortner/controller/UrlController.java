@@ -37,7 +37,7 @@ public class UrlController {
     }
 
     @PostMapping("/url")
-    public String urlShortname(@RequestBody UrlReq urlReq) {
+    public String urlShortname(@RequestBody  UrlReq urlReq) {
 
         return urlShortnerServise.shortUrl(urlReq.url());
     }
