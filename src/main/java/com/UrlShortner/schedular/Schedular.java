@@ -29,7 +29,7 @@ public class Schedular {
         this.base62=base62;
         this.redisTemplate=redisTemplate;
     }
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedRate = 500000)
     public void updateCount() {
         System.out.println("schedular called");
 

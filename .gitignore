@@ -18,6 +18,8 @@ target/
 *.iws
 *.iml
 *.ipr
+logs
+urlShortnerfrontend/node_modules
 
 ### NetBeans ###
 /nbproject/private/
