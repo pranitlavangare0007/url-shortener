@@ -320,19 +320,3 @@ The test ramps from 0 → 100 → 250 → 500 → 1000 virtual users over about 
 
 ---
 
-## 🔮 Possible Improvements
-
-- Move the short-link base URL (`http://localhost:8080/`) and the frontend API URL into environment-specific configuration
-- Read secrets (DB password) from environment variables instead of `application.properties`
-- Add custom aliases and link expiration
-- Add an endpoint to view click statistics for a link
-- Return JSON error bodies consistently so the frontend can show server messages
-- Use `X-Forwarded-For` for client IP detection when running behind a proxy or load balancer
-- Add unit and integration tests for the service layer and controllers
-- Containerize the backend and frontend and add them to Docker Compose
-
----
-
-## 📄 License
-
-No license has been specified yet. Add a `LICENSE` file (for example MIT) to define how others may use this project.
